@@ -1,40 +1,34 @@
 import mongoose from "npm:mongoose";
-import JWT, { generateJWT, readJWT, sign, verify } from "./jwt.ts";
+import JWT from "./jwt.ts";
 
-export type AuthConfigType = {
-  databaseURL: string;
-  authProviders: {};
-}
+type AuthConfig = {
+  mongoURL: string;
+};
 
-class EmailPassword {
-  constructor() {
-    
+export class PasswordAuth {
+  jwt!: JWT;
+  config: AuthConfig;
+  connection!: mongoose.Mongoose;
+  public static async create(config: AuthConfig): Promise<PasswordAuth> {
+    const passwordAuth = new PasswordAuth(config);
+    await passwordAuth.initialize();
+    return passwordAuth;
   }
-}
 
-class ServerAuth {
-  public constructor(config: AuthConfigType) {
+  private constructor(config: AuthConfig) {
     this.config = config;
   }
-  
-  public async initialize() {
-    await mongoose.connect(this.config.databaseURL);
+
+  private async initialize(): Promise<void> {
+    this.connection = await mongoose.connect(this.config.mongoURL);
   }
 
-  public async signUp() {
+  public async signUp(email: string, password: string): Promise<string> {
+    // Add user to the database
+    
 
+    // Create a JWT token
+    return await this.jwt.generateJWT({ email, password });
   }
-  public async signIn() {
-
-  }
-
-  private config: AuthConfigType;
+  public async signIn(email: string, password: string) {}
 }
-
-const jwt = await JWT.create("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
-
-let token = await jwt.generateJWT({
-  username: "Heloo",
-  password: "aaa",
-});
-console.log(await jwt.readJWT(token));
