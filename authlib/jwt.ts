@@ -57,18 +57,10 @@ export async function verify(
   );
 }
 
-export async function generateJWT(
-  username: string,
-  password: string
-): Promise<string> {
+export async function generateJWT<T>(payload: T): Promise<string> {
   const header = {
     type: "JWT",
     alg: "HS256",
-  };
-
-  const payload = {
-    username,
-    password,
   };
 
   const headerBase64 = encodeBase64(JSON.stringify(header));
@@ -81,7 +73,6 @@ export async function generateJWT(
 }
 
 export async function readJWT(token: string): Promise<JWTToken> {
-  // TODO: add a limit
   const tokenParts = token.split(".", 3);
   const header = tokenParts[0];
   const payload = tokenParts[1];

@@ -33,5 +33,8 @@ class ServerAuth {
 }
 
 
-let token = await generateJWT("Cool user", "cool pass");
+let token = await generateJWT({
+  username: "Heloo",
+  password: "aaa",
+});
 console.log(await readJWT(token));
