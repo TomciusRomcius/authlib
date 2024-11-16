@@ -20,7 +20,7 @@ const key = await crypto.subtle.generateKey(
   ["sign", "verify"]
 );
 
-// Returns a base64 key
+// Returns a base64 signature
 export async function sign(data64: string): Promise<string> {
   const textEncoder = new TextEncoder();
   const buf = await crypto.subtle.sign(
@@ -31,8 +31,8 @@ export async function sign(data64: string): Promise<string> {
     textEncoder.encode(data64)
   );
   const bufArray = new Uint8Array(buf);
-  const base64String = btoa(String.fromCharCode(...bufArray));
-  return base64String;
+  const base64signature = btoa(String.fromCharCode(...bufArray));
+  return base64signature;
 }
 
 export async function verify(
