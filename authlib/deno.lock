@@ -5,7 +5,8 @@
     "jsr:@std/encoding@*": "1.0.5",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "npm:@types/node@*": "22.5.4",
-    "npm:mongoose@*": "8.8.1"
+    "npm:mongoose@*": "8.8.1",
+    "npm:mongoose@^8.8.1": "8.8.1"
   },
   "jsr": {
     "@std/assert@1.0.8": {
@@ -131,7 +132,8 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/assert@1"
+      "jsr:@std/assert@1",
+      "npm:mongoose@^8.8.1"
     ]
   }
 }

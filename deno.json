@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-run --allow-read dev.ts",
+    "dev:authlib": "deno task --cwd ./authlib dev main.ts",
+    "dev:test": "deno task --cwd ./test dev main.ts"
+  },
+  "workspace": ["authlib", "test"]
+}

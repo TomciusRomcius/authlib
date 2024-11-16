@@ -1,0 +1,13 @@
+services:
+  mongo-db:
+    image: mongo
+    container_name: authlib-test-mongodb
+    ports:
+      - 27017:27017
+  mongo-express:
+    image: mongo
+    container_name: authlib-test-mongo-express
+    ports:
+      - 8081:8081
+
+
