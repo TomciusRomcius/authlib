@@ -1,5 +1,5 @@
 import mongoose from "npm:mongoose";
-import { generateJWT, readJWT, sign, verify } from "./jwt.ts";
+import JWT, { generateJWT, readJWT, sign, verify } from "./jwt.ts";
 
 export type AuthConfigType = {
   databaseURL: string;
@@ -13,7 +13,6 @@ class EmailPassword {
 }
 
 class ServerAuth {
-  
   public constructor(config: AuthConfigType) {
     this.config = config;
   }
@@ -32,9 +31,10 @@ class ServerAuth {
   private config: AuthConfigType;
 }
 
+const jwt = await JWT.create("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
 
-let token = await generateJWT({
+let token = await jwt.generateJWT({
   username: "Heloo",
   password: "aaa",
 });
-console.log(await readJWT(token));
+console.log(await jwt.readJWT(token));
