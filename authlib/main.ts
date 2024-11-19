@@ -4,6 +4,7 @@ import UserModel from "./models/userModel.ts";
 
 type AuthConfig = {
   mongoURL: string;
+  authKey: string; 
 };
 
 export class PasswordAuth {
@@ -23,9 +24,7 @@ export class PasswordAuth {
   private async initialize(): Promise<void> {
     console.log("Connecting");
     // TODO: read key from a config file
-    this.jwt = await JWT.create(
-      "0a526a90a85596dcb3669fd86963422969edbbf7c4752492d780b78e6355d4ee"
-    );
+    this.jwt = await JWT.create(this.config.authKey);
     this.connection = await mongoose.connect(
       "mongodb://root:rootpassword@127.0.0.1:27017"
     );
