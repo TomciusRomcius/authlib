@@ -11,7 +11,6 @@ export function stringToBinary(data: string) {
   return buffer;
 }
 
-
 export type JWTToken<T> = {
   header: {
     alg: string;
@@ -25,7 +24,7 @@ export default class JWT {
   private strKey: string;
   private key!: CryptoKey;
 
-  public static async create(key: string) {
+  public static async create(key: string): Promise<JWT> {
     const jwt = new JWT(key);
 
     // If initialization of the key fails an error is thrown
