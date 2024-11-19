@@ -1,7 +1,7 @@
 import { sign, verify } from "./signVerify.ts";
 
 // For UTF-8 strings
-function stringToBinary(data: string) {
+export function stringToBinary(data: string) {
   const buffer = new Uint8Array(data.length);
   for (let i = 0; i < data.length; i++) {
     buffer[i] = data.charCodeAt(i);
