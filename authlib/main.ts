@@ -1,4 +1,4 @@
-import mongoose from "npm:mongoose";
+import mongoose from "mongoose";
 import JWT, { type JWTToken } from "./jwt.ts";
 import UserModel from "./models/userModel.ts";
 

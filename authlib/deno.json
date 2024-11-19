@@ -1,4 +1,7 @@
 {
+  "name": "@tomasrimkevicius/authlib",
+  "version": "1.0.0",
+  "exports": "./main.ts",
   "tasks": {
     "dev": "deno run --watch --allow-read --allow-env --allow-sys --allow-net main.ts"
   },
