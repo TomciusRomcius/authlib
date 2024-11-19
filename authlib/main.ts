@@ -32,7 +32,7 @@ export class PasswordAuth {
     console.log("Connected");
   }
 
-  public async authenticate(jwtToken: string): Promise<JWTToken | null> {
+  public async authenticate<T>(jwtToken: string): Promise<JWTToken<T> | null> {
     try {
       return await this.jwt.readJWT(jwtToken);
     } catch {

@@ -3,6 +3,11 @@ import JWT from "../jwt.ts";
 
 const key = "0a526a90a85596dcb3669fd86963422969edbbf7c4752492d780b78e6355d4ee";
 
+type PayloadType = {
+  username: string;
+  password: string;
+}
+
 Deno.test("JWT logic", async (t) => {
   await t.step("create() should succesfully create a JWT instance", async () => {
     const jwt = await JWT.create(key);
@@ -37,17 +42,13 @@ Deno.test("JWT logic", async (t) => {
       password: "testpass"
     };
     const token = await jwt.generateJWT(payload);
-    const tokenDecoded = await jwt.readJWT(token);
+    const tokenDecoded = await jwt.readJWT<PayloadType>(token);
     expect(tokenDecoded.payload.username).toBe(payload.username);
     expect(tokenDecoded.payload.password).toBe(payload.password);
   });
 
   await t.step("readJWT() should reject tokens that have been tampered with", async () => {
     const jwt = await JWT.create(key);
-    const originalPayload = {
-      username: "testuser",
-      password: "testpass"
-    };
     const payload = {
       username: "testuser",
       password: "testpass"

@@ -10,15 +10,14 @@ export function stringToBinary(data: string) {
   return buffer;
 }
 
-export type JWTToken = {
+
+export type JWTToken<T> = {
   header: {
     alg: string;
     type: "JWT";
   };
-  payload: {
-    username: string;
-    password: string;
-  };
+
+  payload: T;
 };
 
 export default class JWT {
@@ -65,7 +64,7 @@ export default class JWT {
     return token;
   }
 
-  public async readJWT(token: string): Promise<JWTToken> {
+  public async readJWT<T>(token: string): Promise<JWTToken<T>> {
     const tokenParts = token.split(".", 3);
     const header = tokenParts[0];
     const payload = tokenParts[1];
@@ -79,6 +78,7 @@ export default class JWT {
       header: JSON.parse(atob(tokenParts[0])),
       payload: JSON.parse(atob(tokenParts[1])),
     };
+
     return result;
   }
 }
