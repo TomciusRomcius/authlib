@@ -74,6 +74,7 @@ export default class JWT {
       throw new Error("The JWT token has been tampered with");
     }
 
+    // TODO: use a safer parsing method to prevent prototype poisoning  
     const result = {
       header: JSON.parse(atob(tokenParts[0])),
       payload: JSON.parse(atob(tokenParts[1])),
