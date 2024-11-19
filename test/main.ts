@@ -1,7 +1,9 @@
 import { PasswordAuth } from "@authlib/main.ts";
 
+console.log(Deno.env.get("AUTH_KEY"));
 const auth = await PasswordAuth.create({
-  mongoURL: "mongodb://root:rootpassword@mongo-db:27017"
+  mongoURL: "mongodb://root:rootpassword@mongo-db:27017",
+  authKey: Deno.env.get("AUTH_KEY")!,
 });
 
 try {
