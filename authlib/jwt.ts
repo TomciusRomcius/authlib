@@ -1,4 +1,5 @@
 import { sign, verify } from "./signVerify.ts";
+import { safeJsonParse } from "./utils.ts";
 
 // For UTF-8 strings
 export function stringToBinary(data: string) {
@@ -74,10 +75,9 @@ export default class JWT {
       throw new Error("The JWT token has been tampered with");
     }
 
-    // TODO: use a safer parsing method to prevent prototype poisoning  
     const result = {
-      header: JSON.parse(atob(tokenParts[0])),
-      payload: JSON.parse(atob(tokenParts[1])),
+      header: safeJsonParse(atob(tokenParts[0])),
+      payload: safeJsonParse(atob(tokenParts[1])),
     };
 
     return result;
