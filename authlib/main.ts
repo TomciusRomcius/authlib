@@ -1,5 +1,6 @@
 import mongoose from "npm:mongoose";
-import JWT from "./jwt.ts";
+import JWT, { type JWTToken } from "./jwt.ts";
+import UserModel from "./models/userModel.ts";
 
 type AuthConfig = {
   mongoURL: string;
@@ -20,15 +21,38 @@ export class PasswordAuth {
   }
 
   private async initialize(): Promise<void> {
-    this.connection = await mongoose.connect(this.config.mongoURL);
+    console.log("Connecting");
+    // TODO: read key from a config file
+    this.jwt = await JWT.create(
+      "0a526a90a85596dcb3669fd86963422969edbbf7c4752492d780b78e6355d4ee"
+    );
+    this.connection = await mongoose.connect(
+      "mongodb://root:rootpassword@127.0.0.1:27017"
+    );
+    console.log("Connected");
+  }
+
+  public async authenticate(jwtToken: string): Promise<JWTToken | null> {
+    try {
+      return await this.jwt.readJWT(jwtToken);
+    } catch {
+      return null;
+    }
   }
 
   public async signUp(email: string, password: string): Promise<string> {
-    // Add user to the database
-    
-
-    // Create a JWT token
-    return await this.jwt.generateJWT({ email, password });
+    // TODO: Implement password encryption
+    if (password.length < 8) throw new Error("Password too short!");
+    const user = new UserModel({ email, password });
+    await user.save();
+    return await this.jwt.generateJWT({ email });
   }
-  public async signIn(email: string, password: string) {}
+
+  public async signIn(email: string, password: string): Promise<string | null> {
+    const selectedUser = await UserModel.findOne({ email });
+    if (selectedUser?.password === password) {
+      console.log("WOO");
+      return await this.jwt.generateJWT({ email });
+    } else return null;
+  }
 }

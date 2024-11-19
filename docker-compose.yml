@@ -1,13 +1,28 @@
 services:
   mongo-db:
-    image: mongo
+    image: mongo:latest
     container_name: authlib-test-mongodb
     ports:
       - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    volumes:
+      - mongodb_data:/data/db
+
   mongo-express:
-    image: mongo
+    image: mongo-express:latest
     container_name: authlib-test-mongo-express
     ports:
       - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpassword
+      - ME_CONFIG_MONGODB_SERVER=mongo-db
+      - ME_CONFIG_OPTIONS_EDITORTHEME=default
+    depends_on:
+      - mongo-db
+    restart: always
 
-
+volumes:
+  mongodb_data:

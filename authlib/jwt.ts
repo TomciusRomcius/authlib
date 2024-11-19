@@ -10,7 +10,7 @@ function stringToBinary(data: string) {
   return buffer;
 }
 
-type JWTToken = {
+export type JWTToken = {
   header: {
     alg: string;
     type: "JWT";

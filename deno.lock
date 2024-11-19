@@ -1,7 +1,8 @@
 {
   "version": "4",
   "specifiers": {
-    "npm:mongoose@*": "8.8.1"
+    "npm:mongoose@*": "8.8.1",
+    "npm:mongoose@^8.8.1": "8.8.1"
   },
   "npm": {
     "@mongodb-js/saslprep@1.1.9": {
